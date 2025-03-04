@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "fastapi-backend"
+version = "0.1"
+description = "Fastapi backend project"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.1"
+uvicorn = {version = ">=0.12.0", extras = ["standard"]}
+sqlalchemy = "^2.0.31"
+pydantic = "^2.8.2"
+alembic = "^1.13.2"
+psycopg2 = "2.9.9"
+asyncpg = "^0.29.0"
+pydantic-settings = "^2.3.4"
+geoalchemy2 = {extras = ["shapely"], version = "^0.17.1"}
+pgvector = "0.3.6"
+
+
+[tool.poetry.extras]
+dev = ["black"]
+
+[tool.poetry.dev-dependencies]
+black = "^24.4.2"
+isort = "^5.13.2"
+pytest = "^8.3.2"
+pytest-asyncio = "^0.24.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 119
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | migrations
+  )/
+)
+'''

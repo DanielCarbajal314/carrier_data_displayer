@@ -1,0 +1,4 @@
+psycopg2==2.9.9
+sqlacodegen==2.3.0.post1
+geoalchemy2==0.16.0
+pgvector==0.3.6

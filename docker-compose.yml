@@ -1,0 +1,67 @@
+services:
+  postgis:
+    image: postgis/postgis:15-3.3
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 1s
+    volumes:
+      - ./backup:/docker-entrypoint-initdb.d
+
+  backend:
+    build: 
+      context: backend
+      target: dev
+    environment:
+      - POSTGRES_URL=${POSTGRES_URL}
+    volumes:
+      - ./backend/src:/code/src
+    ports:
+      - 8000:8000
+    depends_on:
+      postgis:
+        condition: service_healthy
+
+  generator:
+    build:
+      context: model-generator
+    tty: true
+    volumes:
+      - ./backend/src/db:/models/generated
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - ${PGADMIN_PORT}:80
+    user: root
+    entrypoint: /bin/sh -c "chmod 600 /pgpass; /entrypoint.sh;"
+    configs:
+      - source: serversjson
+        target: /pgadmin4/servers.json
+      - source: pgpasss
+        target: /pgpass
+    depends_on:
+      postgis:
+        condition: service_healthy
+
+configs:
+  pgpasss:
+    content: postgis:${POSTGRES_PORT}:*:${POSTGRES_USER}:${POSTGRES_PASSWORD}
+  serversjson:
+    content: |
+      {"Servers": {"1": {
+        "Group": "Servers",
+        "Name": "My Local Postgres 16.1",
+        "Host": "postgis",
+        "Port": ${POSTGRES_PORT},
+        "MaintenanceDB": "postgres",
+        "Username": "${POSTGRES_USER}",
+        "PassFile": "/pgpass",
+        "SSLMode": "prefer"
+      }}}
