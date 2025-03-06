@@ -5,6 +5,7 @@ import { PointSource } from "./components/map/components/PointSource";
 import { useServerState } from "./hooks/useServerState";
 import { CentroidSource } from "./components/map/components/CentroidSource";
 import { ChartView } from "./components/ChartView";
+import { StateCountInformation } from "./components/StateCountInformation";
 
 export function CarrierReport() {
   const {
@@ -64,16 +65,7 @@ export function CarrierReport() {
         )}
       </div>
       {carrierInformation && (
-        <div className="mt-5">
-          <h2>Unique Records Count Per State</h2>
-          <ul>
-            {Object.entries(recordsCountPerState).map(([state, count]) => (
-              <li key={state}>
-                {state}: {count}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <StateCountInformation {...{ stateColorMap, recordsCountPerState }} />
       )}
     </div>
   );
