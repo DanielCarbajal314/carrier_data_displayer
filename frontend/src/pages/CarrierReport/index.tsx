@@ -21,7 +21,7 @@ export function CarrierReport() {
   return (
     <div>
       <p className="text-3xl mb-5">Carrier Report</p>
-      <div className="flex justify-between items-end mb-5 w-1/2">
+      <div className="flex justify-between items-end w-1/2 px-5">
         <div className="w-1/4">
           <Select
             label="Available Dates"
