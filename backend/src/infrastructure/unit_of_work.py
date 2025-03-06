@@ -1,6 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from .repositories.carrier_record_repository import CarrierRecordRepository
 from .repositories.county_repository import CountyRepository
+
 
 class UnitOfWork:
     __session: AsyncSession

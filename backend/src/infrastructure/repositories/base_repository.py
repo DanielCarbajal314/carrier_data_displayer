@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 TEntity = TypeVar("TEntity")
 
+
 class TableRepository:
 
     def __init__(self, session: AsyncSession):
