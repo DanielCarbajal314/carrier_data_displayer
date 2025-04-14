@@ -68,5 +68,6 @@ export function useServerState() {
     stateColorMap,
     mapBounds,
     recordsCountPerState,
+    selectedDate,
   };
 }

@@ -18,6 +18,7 @@ export function CarrierReport() {
     usaFeatures,
     stateColorMap,
     recordsCountPerState,
+    selectedDate,
   } = useServerState();
   const [showLabel, setShowLabel] = useState(false);
   return (
@@ -75,7 +76,9 @@ export function CarrierReport() {
         </div>
       )}
       {carrierInformation && (
-        <ReportTable {...{ reportData: carrierInformation.report }} />
+        <ReportTable
+          {...{ reportData: carrierInformation.report, selectedDate }}
+        />
       )}
     </div>
   );
