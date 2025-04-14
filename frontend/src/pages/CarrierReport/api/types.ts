@@ -7,6 +7,7 @@ export interface CarrierRecordsDates {
 export interface CarrierInformation {
   records: CarrierRecord[];
   counties: County[];
+  report: ReportData[];
   centroid: Feature;
 }
 
@@ -22,4 +23,15 @@ export interface County {
   name: string;
   state: string;
   geojson: Feature;
+}
+
+export interface ReportData {
+  start: string;
+  end: string;
+  secondsDuration: number;
+  sampleNumber: number;
+  county: string;
+  state: string;
+  centroid: Feature;
+  distanceFromPrevious: number;
 }

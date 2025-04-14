@@ -3,10 +3,11 @@ from datetime import date, datetime
 from typing import List, Optional
 
 from geoalchemy2 import WKBElement
-from geoalchemy2.types import Geometry
 from sqlalchemy import func, select
 
 from src.db.models import Carrierrecord
+from src.infrastructure.repositories.carrier_record_query.carrier_records_report import (
+    ReportData, build_carrier_records_report_query)
 
 from .base_repository import BaseRepository
 from .shared.geometry_to_geojson import geometry_to_geojson
@@ -58,6 +59,24 @@ class CarrierRecordRepository(BaseRepository[Carrierrecord]):
                 local_date_time=record["local_date_time"],
                 geojson=geometry_to_geojson(record["geom"]),
                 distance=record["distance"],
+            )
+            for record in data
+        ]
+
+    async def get_carrier_report_by_date(self, target_date: date) -> List[RecordData]:
+        query = build_carrier_records_report_query(target_date)
+        records = await self._session.execute(query)
+        data = records.mappings().all()
+        return [
+            ReportData(
+                county=record["county"],
+                state=record["state"],
+                start=record["start"],
+                end=record["end"],
+                seconds_duration=record["seconds_duration"],
+                sample_number=record["sample_number"],
+                distance_from_previous=record["distance_from_previous"],
+                centroid=geometry_to_geojson(record["centroid_geom"]),
             )
             for record in data
         ]

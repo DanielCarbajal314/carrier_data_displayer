@@ -6,6 +6,8 @@ import { useServerState } from "./hooks/useServerState";
 import { CentroidSource } from "./components/map/components/CentroidSource";
 import { ChartView } from "./components/ChartView";
 import { StateCountInformation } from "./components/StateCountInformation";
+import { ReportTable } from "./components/ReportTable";
+import { StateCountInformationNonUnique } from "./components/StateCountInformationNonUnique";
 
 export function CarrierReport() {
   const {
@@ -65,7 +67,15 @@ export function CarrierReport() {
         )}
       </div>
       {carrierInformation && (
-        <StateCountInformation {...{ stateColorMap, recordsCountPerState }} />
+        <div className="flex gap-5">
+          <StateCountInformation {...{ stateColorMap, recordsCountPerState }} />
+          <StateCountInformationNonUnique
+            {...{ stateColorMap, reportData: carrierInformation.report }}
+          />
+        </div>
+      )}
+      {carrierInformation && (
+        <ReportTable {...{ reportData: carrierInformation.report }} />
       )}
     </div>
   );

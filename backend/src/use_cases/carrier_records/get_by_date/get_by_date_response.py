@@ -18,7 +18,19 @@ class CountyData(BaseSchema):
     geojson: dict | None
 
 
+class ReportData(BaseSchema):
+    start: datetime
+    end: datetime
+    seconds_duration: float
+    sample_number: int
+    county: str
+    state: str
+    centroid: dict
+    distance_from_previous: float | None
+
+
 class GetByDateResponse(BaseSchema):
     records: List[CarrierRecord]
     counties: List[CountyData]
+    report: List[ReportData]
     centroid: dict
