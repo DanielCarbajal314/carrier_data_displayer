@@ -8,7 +8,7 @@ export function StateCountInformation({
   stateColorMap,
 }: StateCountInformationProps) {
   return (
-    <div className="mt-5 p-5 flex flex-col gap-5 w-1/2 bg-slate-600 rounded-lg">
+    <div className="mt-5 p-5 flex flex-col gap-5 w-1/3 bg-slate-600 rounded-lg">
       <h2>Unique Records Count Per State</h2>
       <ul>
         {Object.entries(recordsCountPerState)
