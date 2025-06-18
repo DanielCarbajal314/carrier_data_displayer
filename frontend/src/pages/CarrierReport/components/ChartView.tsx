@@ -19,9 +19,10 @@ interface DataPoint {
 interface ChartViewProps {
   data: DataPoint[];
   stateColorMap: Record<string, string>;
+  className?: string;
 }
 
-export function ChartView({ data, stateColorMap }: ChartViewProps) {
+export function ChartView({ data, stateColorMap, className }: ChartViewProps) {
   const datasets = Object.entries(
     data.reduce<Record<string, { x: string; y: number }[]>>(
       (acc, { state, date, distance }) => {
@@ -39,7 +40,7 @@ export function ChartView({ data, stateColorMap }: ChartViewProps) {
   }));
 
   return (
-    <div className="bg-slate-100 p-10 rounded-lg w-1/2 h-[400px] mt-4">
+    <div className={`${className} bg-slate-100 p-10 rounded-lg w-1/2 h-[400px] mt-4`}>
       <h2>Distance Over Time</h2>
       <Scatter
         id="chart"

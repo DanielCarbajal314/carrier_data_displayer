@@ -6,7 +6,9 @@ from src.use_cases.carrier_records import (GetAvailableDateHandler,
                                            GetAvailableDateRequest,
                                            GetAvailableDateResponse,
                                            GetByDateHandler, GetByDateRequest,
-                                           GetByDateResponse)
+                                           GetByDateResponse, GetReportHandler,
+                                           GetReportRequest,
+                                           GetReportResponseItem)
 
 carrier_records_router = APIRouter(prefix="/carrier-records", tags=["Carrier Records"])
 
@@ -19,9 +21,17 @@ async def get_available_dates(
     response = await handler.execute(request)
     return response
 
+@carrier_records_router.get("/report")
+async def get_report(
+    handler: GetReportHandler = Depends(GetReportHandler),
+) -> List[GetReportResponseItem]:
+    request = GetReportRequest()
+    response = await handler.execute(request)
+    return response
 
 @carrier_records_router.get("/{date}")
 async def get_by_date(date: str, handler: GetByDateHandler = Depends(GetByDateHandler)) -> GetByDateResponse:
     request = GetByDateRequest(date=date)
     response = await handler.execute(request)
     return response
+

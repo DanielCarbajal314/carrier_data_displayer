@@ -7,7 +7,7 @@ export function LoadingPage({
   loading: boolean;
   children: React.ReactNode;
 }) {
-  const nonLoadingClasses = "m-20 min-h-max";
+  const nonLoadingClasses = "min-h-max";
   const loadingClasses = "flex justify-center w-full min-h-72 items-center";
   return (
     <div className={loading ? loadingClasses : nonLoadingClasses}>
